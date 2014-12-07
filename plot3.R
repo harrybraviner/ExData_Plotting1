@@ -34,12 +34,15 @@ dataTable[,Sub_metering_3 := as.numeric(Sub_metering_3)]
 # (note that Time is still as characters)
 
 # Make plot 2
-png(filename= "plot2.png", width = 480, height = 480)
-# Set up the plot
-with(dataTable, plot(strptime(paste(Date, Time, sep=" "), format="%Y-%m-%d %H:%M:%S"), Global_active_power, type="n", main="", xlab = "", ylab = "Global Active Power (kilowatts)"))
+png(filename= "plot3.png", width = 480, height = 480)
+# Set up the plot (using Sub_metering_1 since that acheives the highest values)
+with(dataTable, plot(strptime(paste(Date, Time, sep=" "), format="%Y-%m-%d %H:%M:%S"), Sub_metering_1, type="n", main="", xlab = "", ylab = "Energy sub metering"))
 # Actually plot the lines
-with(dataTable, lines(strptime(paste(Date, Time, sep=" "), format="%Y-%m-%d %H:%M:%S"), Global_active_power))
-# The defaults this produces for the x and y tics match what we're asked for, thankfully!
+with(dataTable, lines(strptime(paste(Date, Time, sep=" "), format="%Y-%m-%d %H:%M:%S"), Sub_metering_1, col="black"))
+with(dataTable, lines(strptime(paste(Date, Time, sep=" "), format="%Y-%m-%d %H:%M:%S"), Sub_metering_2, col="red"))
+with(dataTable, lines(strptime(paste(Date, Time, sep=" "), format="%Y-%m-%d %H:%M:%S"), Sub_metering_3, col="blue"))
+# Include the legend
+with(dataTable, legend("topright", col=c("black","red","blue"), lty=c(1,1,1), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3")))
 dev.off()
 
 #Done!
